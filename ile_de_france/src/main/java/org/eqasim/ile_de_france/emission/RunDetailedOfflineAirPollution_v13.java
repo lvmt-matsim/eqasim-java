@@ -19,7 +19,7 @@ import org.matsim.vehicles.MatsimVehicleWriter;
 
 import static org.matsim.contrib.emissions.utils.EmissionsConfigGroup.HbefaVehicleDescriptionSource.asEngineInformationAttributes;
 
-public class RunDetailedOfflineAirPollution_v12 {
+public class RunDetailedOfflineAirPollution_v13 {
 
 	final static String scenarioID = "ile_de_france_1pm";
 	final static String inputFilePath = "./ile_de_france/src/main/java/org/eqasim/ile_de_france/emission/input";
@@ -38,6 +38,7 @@ public class RunDetailedOfflineAirPollution_v12 {
 		eConfig.setDetailedWarmEmissionFactorsFile(hbefaFileWarm);
 		eConfig.setDetailedColdEmissionFactorsFile(hbefaFileCold);
 		eConfig.setNonScenarioVehicles(NonScenarioVehicles.ignore);
+		eConfig.setHbefaRoadTypeSource(HbefaRoadTypeSource.fromLinkAttributes);
 		eConfig.setHbefaVehicleDescriptionSource(asEngineInformationAttributes);
 		eConfig.setDetailedVsAverageLookupBehavior(EmissionsConfigGroup.DetailedVsAverageLookupBehavior.onlyTryDetailedElseAbort);  //emission version 12.0
 		eConfig.setEmissionsComputationMethod(EmissionsConfigGroup.EmissionsComputationMethod.StopAndGoFraction); // this is added; default is Averagespeed.

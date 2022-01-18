@@ -10,13 +10,14 @@
 
 	<modules>
 		<module>core</module>
-		<module>switzerland</module>
+		<!--		<module>switzerland</module>-->
 		<module>ile_de_france</module>
-		<module>sao_paulo</module>
-		<module>examples</module>
-		<module>san_francisco</module>
-		<module>los_angeles</module>
-		<module>vdf</module>
+		<!--		<module>sao_paulo</module>-->
+		<!--		<module>automated_vehicles</module>-->
+		<!--		<module>examples</module>-->
+		<!--		<module>san_francisco</module>-->
+		<!--		<module>los_angeles</module>-->
+		<!--		<module>auckland</module>-->
 	</modules>
 
 	<properties>
@@ -85,6 +86,12 @@
 		<dependency>
 			<groupId>org.matsim</groupId>
 			<artifactId>matsim</artifactId>
+			<version>${matsim.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.matsim.contrib</groupId>
+			<artifactId>emissions</artifactId>
 			<version>${matsim.version}</version>
 		</dependency>
 

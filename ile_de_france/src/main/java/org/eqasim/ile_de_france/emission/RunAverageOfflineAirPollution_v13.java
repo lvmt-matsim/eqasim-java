@@ -1,7 +1,6 @@
 package org.eqasim.ile_de_france.emission;
 
-import org.eqasim.ile_de_france.scenario.OsmHbefaMapping;
-import org.matsim.api.core.v01.Id;
+
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
@@ -24,15 +23,15 @@ import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.vehicles.*;
 import java.io.File;
 
-public class RunAverageOfflineAirPollution_v12 {
+public class RunAverageOfflineAirPollution_v13 {
 
 	final static String scenarioID = "ile_de_france_1pm";
 	final static String inputFilePath = "./ile_de_france/src/main/java/org/eqasim/ile_de_france/emission/input";
 	final static String outputPath = "./simulation_output/" + scenarioID;
 //	static final String configFile = outputPath + "./output_config.xml";
 	static final String eventsFile = outputPath + "./output_events.xml.gz";
-	static final String hbefaFileCold =  inputFilePath+ "./EFA_ColdStart_Subsegm_IDF_2021ParcAuto_LCA.csv";
-	static final String hbefaFileWarm =  inputFilePath+ "./EFA_HOT_Subsegm_IDF_2021ParcAuto_LCA.csv";
+	static final String hbefaFileCold =  inputFilePath+ "./EFA_ColdStart_Subsegm_2021ParcAuto_LCA_filter.csv";
+	static final String hbefaFileWarm =  inputFilePath+ "./EFA_HOT_Subsegm_2021ParcAuto_LCA_filter.csv";
 
 	static final String emissionEventOutputFileName = outputPath + "./emissions_average.xml.gz";
 
@@ -43,6 +42,7 @@ public class RunAverageOfflineAirPollution_v12 {
 		eConfig.setAverageWarmEmissionFactorsFile(hbefaFileWarm);
 		eConfig.setAverageColdEmissionFactorsFile(hbefaFileCold);
 		eConfig.setNonScenarioVehicles(NonScenarioVehicles.ignore);
+		eConfig.setHbefaRoadTypeSource(HbefaRoadTypeSource.fromLinkAttributes);
 		eConfig.setDetailedVsAverageLookupBehavior(EmissionsConfigGroup.DetailedVsAverageLookupBehavior.directlyTryAverageTable);  //emission version 12.0
 		eConfig.setEmissionsComputationMethod(EmissionsConfigGroup.EmissionsComputationMethod.StopAndGoFraction); // this is added; default is Averagespeed.
 
@@ -128,6 +128,9 @@ public class RunAverageOfflineAirPollution_v12 {
 */
 		// From here everything is as in the offline emissions contrib example
 		// This prepares the emissions module
+
+
+
 		AbstractModule module = new AbstractModule(){
 			@Override
 			public void install(){
