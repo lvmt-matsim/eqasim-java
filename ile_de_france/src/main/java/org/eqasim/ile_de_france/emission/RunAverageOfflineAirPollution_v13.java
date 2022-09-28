@@ -43,7 +43,7 @@ public class RunAverageOfflineAirPollution_v13 {
 		eConfig.setAverageColdEmissionFactorsFile(hbefaFileCold);
 		eConfig.setNonScenarioVehicles(NonScenarioVehicles.ignore);
 		eConfig.setHbefaRoadTypeSource(HbefaRoadTypeSource.fromLinkAttributes);
-		eConfig.setDetailedVsAverageLookupBehavior(EmissionsConfigGroup.DetailedVsAverageLookupBehavior.directlyTryAverageTable);  //emission version 12.0
+		eConfig.setDetailedVsAverageLookupBehavior(EmissionsConfigGroup.DetailedVsAverageLookupBehavior.directlyTryAverageTable);
 		eConfig.setEmissionsComputationMethod(EmissionsConfigGroup.EmissionsComputationMethod.StopAndGoFraction); // this is added; default is Averagespeed.
 
 		// Load ile-de-France config file and add emissions group

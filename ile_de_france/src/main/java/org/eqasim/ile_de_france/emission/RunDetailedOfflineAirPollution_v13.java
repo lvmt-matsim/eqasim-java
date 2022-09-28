@@ -16,7 +16,7 @@ import org.matsim.core.events.MatsimEventsReader;
 import org.matsim.core.events.algorithms.EventWriterXML;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.vehicles.MatsimVehicleWriter;
-
+import org.matsim.contrib.emissions.Pollutant;
 import static org.matsim.contrib.emissions.utils.EmissionsConfigGroup.HbefaVehicleDescriptionSource.asEngineInformationAttributes;
 
 public class RunDetailedOfflineAirPollution_v13 {
@@ -26,13 +26,14 @@ public class RunDetailedOfflineAirPollution_v13 {
 	final static String outputPath = "./simulation_output/" + scenarioID;
 //	static final String configFile = outputPath + "./output_config.xml";
 	static final String eventsFile = outputPath + "./output_events.xml.gz";
-	static final String hbefaFileCold =  inputFilePath+ "./EFA_ColdStart_Subsegm_2021ParcAuto_LCA_filter.csv";
-	static final String hbefaFileWarm =  inputFilePath+ "./EFA_HOT_Subsegm_2021ParcAuto_LCA_filter.csv";
+	static final String hbefaFileCold =  inputFilePath+ "./EFA_ColdStart_Subsegm_2021ParcAuto_HE_filter.csv";
+	static final String hbefaFileWarm =  inputFilePath+ "./EFA_HOT_Subsegm_2021ParcAuto_HE_filter.csv";
 
-	static final String emissionEventOutputFileName = outputPath + "./emissions_detailed.xml.gz";
+	static final String emissionEventOutputFileName = outputPath + "./emissions_detailed_PHEV.xml.gz";
 
 
 	static public void main(String[] args) {		// Create config group for emissions
+
 		EmissionsConfigGroup eConfig = new EmissionsConfigGroup();
 		eConfig.setWritingEmissionsEvents(true);
 		eConfig.setDetailedWarmEmissionFactorsFile(hbefaFileWarm);
@@ -40,8 +41,8 @@ public class RunDetailedOfflineAirPollution_v13 {
 		eConfig.setNonScenarioVehicles(NonScenarioVehicles.ignore);
 		eConfig.setHbefaRoadTypeSource(HbefaRoadTypeSource.fromLinkAttributes);
 		eConfig.setHbefaVehicleDescriptionSource(asEngineInformationAttributes);
-		eConfig.setDetailedVsAverageLookupBehavior(EmissionsConfigGroup.DetailedVsAverageLookupBehavior.onlyTryDetailedElseAbort);  //emission version 12.0
-		eConfig.setEmissionsComputationMethod(EmissionsConfigGroup.EmissionsComputationMethod.StopAndGoFraction); // this is added; default is Averagespeed.
+		eConfig.setDetailedVsAverageLookupBehavior(EmissionsConfigGroup.DetailedVsAverageLookupBehavior.onlyTryDetailedElseAbort); // for detailed emission version, BYin, Dec. 2021
+		eConfig.setEmissionsComputationMethod(EmissionsConfigGroup.EmissionsComputationMethod.StopAndGoFraction); // BYin, Jan, 2022; default one is Averagespeed.
 		
 		System.out.println(eConfig.getEmissionsComputationMethod()) ;
 		// Load ile-de-France config file and add emissions group
@@ -55,7 +56,7 @@ public class RunDetailedOfflineAirPollution_v13 {
 
         // or create a new and simple config file
 		Config config = ConfigUtils.createConfig();
-		config.vehicles().setVehiclesFile(inputFilePath + "./output_vehicles_modified.xml"); // need change the "defaultVehicleType" to "car" in output_vehicles.file" or see new method for output_vehicle.xml
+		config.vehicles().setVehiclesFile(inputFilePath + "./output_vehicles_modified_PHEV.xml"); // need change the "defaultVehicleType" to "car" in output_vehicles.file" or see new method for output_vehicle.xml
 //		config.network().setInputFile(outputPath+ "./hbefa_network.xml.gz");
 		config.network().setInputFile(outputPath+ "./output_network.xml.gz");
 		config.plans().setInputFile(outputPath + "./output_plans.xml.gz");
