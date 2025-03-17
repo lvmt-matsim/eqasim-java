@@ -1,8 +1,11 @@
 package org.eqasim.ile_de_france.emission.car_model;
 
 
+import org.eqasim.ile_de_france.scenario.OsmHbefaMapping;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
+import org.matsim.api.core.v01.network.Network;
+import org.matsim.api.core.v01.network.NetworkWriter;
 import org.matsim.contrib.emissions.EmissionModule;
 import org.matsim.contrib.emissions.HbefaVehicleCategory;
 import org.matsim.contrib.emissions.utils.EmissionsConfigGroup;
@@ -24,8 +27,8 @@ import org.matsim.vehicles.VehicleUtils;
 
 public class RunAverageOfflineAirPollution {
 	final static String inputHbefaPath = "./ile_de_france/src/main/java/org/eqasim/ile_de_france/emission/input";
-	final static String inputFilePath = "G:/lvmt_mlannes/simulation_Biao/emission_average_IDF_100pct/60iter";
-
+	//final static String inputFilePath = "G:/lvmt_mlannes/simulation_Biao/emission_average_IDF_100pct/60iter";
+	final static String inputFilePath = "E:/lvmt_BY/simulation_output/marjolaine/output_IdF_egt_5pct_2018";
 
 	static final String eventsFile = inputFilePath + "./output_events.xml.gz";
 
@@ -49,8 +52,8 @@ public class RunAverageOfflineAirPollution {
         // or create a new and simple config file
 		Config config = ConfigUtils.createConfig();
 		config.vehicles().setVehiclesFile(inputFilePath + "./output_vehicles.xml.gz"); // see new method for output_vehicle.xml in matsim simulation
-		config.network().setInputFile(inputFilePath+ "./hbefa_network.xml");
-//		config.network().setInputFile(outputPath+ "./output_network.xml.gz");
+		config.network().setInputFile(inputFilePath+ "./hbefa_network.xml.gz");
+//		config.network().setInputFile(inputFilePath+ "./output_network.xml.gz");
 		config.plans().setInputFile(inputFilePath + "./output_plans.xml.gz");
 //		config.global().setCoordinateSystem("EPSG:2154");
 		config.parallelEventHandling().setNumberOfThreads(null);
@@ -62,15 +65,15 @@ public class RunAverageOfflineAirPollution {
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 		EventsManager eventsManager = EventsUtils.createEventsManager();
 
-		//network mapping: way 1-default function
+		//network mapping: way 1-default function (see RunHbefaMapping)
 //		OsmHbefaMapping abc = OsmHbefaMapping.build();
 //		Network network = scenario.getNetwork();
 //		abc.addHbefaMappings(network);
-//      new NetworkWriter(network).write(scenarioDirectory+ "./hbefa_network.xml.gz");
+//        new NetworkWriter(network).write(inputFilePath + "./hbefa_network.xml.gz");
 
         // vehicle settings if without vehicle type information from the input vehicle type file, and the settings is cooresponding to network modes settings
 		// check the output_vehicles.xml to set below the same the vehicle type
-		Id<VehicleType> carVehicleTypeId = Id.create("defaultVehicleType", VehicleType.class);
+		Id<VehicleType> carVehicleTypeId = Id.create("default_car", VehicleType.class);
 		VehicleType carVehicleType = scenario.getVehicles().getVehicleTypes().get(carVehicleTypeId);
 		EngineInformation carEngineInformation = carVehicleType.getEngineInformation();
 		VehicleUtils.setHbefaVehicleCategory( carEngineInformation, HbefaVehicleCategory.PASSENGER_CAR.toString());
@@ -78,24 +81,31 @@ public class RunAverageOfflineAirPollution {
 		VehicleUtils.setHbefaSizeClass( carEngineInformation, "average" );
 		VehicleUtils.setHbefaEmissionsConcept( carEngineInformation, "average" );
 
-		//mode car
-		/*Id<VehicleType> carVehicleTypeId = Id.create("car", VehicleType.class);
-		VehicleType carVehicleType = scenario.getVehicles().getVehicleTypes().get(carVehicleTypeId);
-		EngineInformation carEngineInformation = carVehicleType.getEngineInformation();
-		VehicleUtils.setHbefaVehicleCategory( carEngineInformation, HbefaVehicleCategory.PASSENGER_CAR.toString());
-		VehicleUtils.setHbefaTechnology( carEngineInformation, "average" );
-		VehicleUtils.setHbefaSizeClass( carEngineInformation, "average" );
-		VehicleUtils.setHbefaEmissionsConcept( carEngineInformation, "average" );*/
-
-         //add other vehicle settings: mode car_passenger
-	/*	Id<VehicleType> carPassengerVehicleTypeId = Id.create("car_passenger", VehicleType.class);
+		Id<VehicleType> carPassengerVehicleTypeId = Id.create("default_car_passenger", VehicleType.class);
 		VehicleType carPassengerVehicleType = scenario.getVehicles().getVehicleTypes().get(carPassengerVehicleTypeId);
 		EngineInformation carPassengerEngineInformation = carPassengerVehicleType.getEngineInformation();
 		VehicleUtils.setHbefaVehicleCategory( carPassengerEngineInformation, HbefaVehicleCategory.PASSENGER_CAR.toString());
 		VehicleUtils.setHbefaTechnology( carPassengerEngineInformation, "average" );
 		VehicleUtils.setHbefaSizeClass( carPassengerEngineInformation, "average" );
 		VehicleUtils.setHbefaEmissionsConcept( carPassengerEngineInformation, "average" );
-*/
+		//mode car
+//		Id<VehicleType> carVehicleTypeId = Id.create("car", VehicleType.class);
+//		VehicleType carVehicleType = scenario.getVehicles().getVehicleTypes().get(carVehicleTypeId);
+//		EngineInformation carEngineInformation = carVehicleType.getEngineInformation();
+//		VehicleUtils.setHbefaVehicleCategory( carEngineInformation, HbefaVehicleCategory.PASSENGER_CAR.toString());
+//		VehicleUtils.setHbefaTechnology( carEngineInformation, "average" );
+//		VehicleUtils.setHbefaSizeClass( carEngineInformation, "average" );
+//		VehicleUtils.setHbefaEmissionsConcept( carEngineInformation, "average" );
+
+         //add other vehicle settings: mode car_passenger
+//		Id<VehicleType> carPassengerVehicleTypeId = Id.create("car_passenger", VehicleType.class);
+//		VehicleType carPassengerVehicleType = scenario.getVehicles().getVehicleTypes().get(carPassengerVehicleTypeId);
+//		EngineInformation carPassengerEngineInformation = carPassengerVehicleType.getEngineInformation();
+//		VehicleUtils.setHbefaVehicleCategory( carPassengerEngineInformation, HbefaVehicleCategory.PASSENGER_CAR.toString());
+//		VehicleUtils.setHbefaTechnology( carPassengerEngineInformation, "average" );
+//		VehicleUtils.setHbefaSizeClass( carPassengerEngineInformation, "average" );
+//		VehicleUtils.setHbefaEmissionsConcept( carPassengerEngineInformation, "average" );
+
 		// From here everything is as in the offline emissions contrib example
 		// This prepares the emissions module
 
