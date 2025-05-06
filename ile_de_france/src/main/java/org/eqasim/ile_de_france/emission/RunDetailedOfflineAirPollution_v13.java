@@ -21,15 +21,17 @@ import static org.matsim.contrib.emissions.utils.EmissionsConfigGroup.HbefaVehic
 
 public class RunDetailedOfflineAirPollution_v13 {
 
-	final static String scenarioID = "ile_de_france_1pm";
-	final static String inputFilePath = "./ile_de_france/src/main/java/org/eqasim/ile_de_france/emission/input";
-	final static String outputPath = "./simulation_output/" + scenarioID;
-//	static final String configFile = outputPath + "./output_config.xml";
-	static final String eventsFile = outputPath + "./output_events.xml.gz";
-	static final String hbefaFileCold =  inputFilePath+ "./EFA_ColdStart_Subsegm_2021ParcAuto_HE_filter.csv";
-	static final String hbefaFileWarm =  inputFilePath+ "./EFA_HOT_Subsegm_2021ParcAuto_HE_filter.csv";
+	final static String scenarioID = "ile_de_france_1pct";
+	final static String inputputPath = "./simulation_output/" + scenarioID;
 
-	static final String emissionEventOutputFileName = outputPath + "./emissions_detailed_PHEV.xml.gz";
+	final static String inputHbefaPath = "./ile_de_france/src/main/java/org/eqasim/ile_de_france/emission/input";
+
+//	static final String configFile = outputPath + "./output_config.xml";
+	static final String eventsFile = inputputPath + "./output_events.xml.gz";
+	static final String hbefaFileCold =  inputHbefaPath+ "./EFA_ColdStart_Subsegm_IDF_2021ParcAuto.csv";
+	static final String hbefaFileWarm =  inputHbefaPath+ "./EFA_HOT_Subsegm_IDF_2021ParcAuto.csv";
+
+	static final String emissionEventOutputFileName = inputputPath + "./emissions_detailed.xml.gz";
 
 
 	static public void main(String[] args) {		// Create config group for emissions
@@ -56,10 +58,10 @@ public class RunDetailedOfflineAirPollution_v13 {
 
         // or create a new and simple config file
 		Config config = ConfigUtils.createConfig();
-		config.vehicles().setVehiclesFile(inputFilePath + "./output_vehicles_modified_PHEV.xml"); // need change the "defaultVehicleType" to "car" in output_vehicles.file" or see new method for output_vehicle.xml
-//		config.network().setInputFile(outputPath+ "./hbefa_network.xml.gz");
-		config.network().setInputFile(outputPath+ "./output_network.xml.gz");
-		config.plans().setInputFile(outputPath + "./output_plans.xml.gz");
+		config.vehicles().setVehiclesFile(inputHbefaPath + "./output_vehicles_modified.xml"); // need change the "defaultVehicleType" to "car" in output_vehicles.file" or see new method for output_vehicle.xml
+		//config.network().setInputFile(inputputPath+ "./hbefa_network.xml.gz");
+		config.network().setInputFile(inputputPath+ "./output_network.xml.gz");
+		config.plans().setInputFile(inputputPath + "./output_plans.xml.gz");
 //		config.global().setCoordinateSystem("EPSG:2154");
 		config.parallelEventHandling().setNumberOfThreads(null);
 		config.parallelEventHandling().setEstimatedNumberOfEvents(null);
@@ -153,6 +155,6 @@ public class RunDetailedOfflineAirPollution_v13 {
 
 		emissionEventWriter.closeFile();
 
-		new MatsimVehicleWriter( scenario.getVehicles() ).writeFile( outputPath+ "./vehicles_types.xml.gz" );
+		//new MatsimVehicleWriter( scenario.getVehicles() ).writeFile( inputFilePath+ "./vehicles_types.xml.gz" );
 	}
 }

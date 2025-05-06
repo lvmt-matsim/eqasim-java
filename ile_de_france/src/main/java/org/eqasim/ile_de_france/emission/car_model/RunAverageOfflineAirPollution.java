@@ -28,7 +28,8 @@ import org.matsim.vehicles.VehicleUtils;
 public class RunAverageOfflineAirPollution {
 	final static String inputHbefaPath = "./ile_de_france/src/main/java/org/eqasim/ile_de_france/emission/input";
 	//final static String inputFilePath = "G:/lvmt_mlannes/simulation_Biao/emission_average_IDF_100pct/60iter";
-	final static String inputFilePath = "E:/lvmt_BY/simulation_output/marjolaine/output_IdF_egt_5pct_2018";
+	//final static String inputFilePath = "E:/lvmt_BY/simulation_output/marjolaine/output_IdF_egt_5pct_2018";
+	final static String inputFilePath = "F:/lannesm/output_IdF_25pct_2018";
 
 	static final String eventsFile = inputFilePath + "./output_events.xml.gz";
 

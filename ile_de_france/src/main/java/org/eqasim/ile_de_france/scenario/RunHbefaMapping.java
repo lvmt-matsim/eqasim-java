@@ -10,7 +10,8 @@ import org.matsim.core.events.EventsUtils;
 import org.matsim.core.scenario.ScenarioUtils;
 
 public class RunHbefaMapping {
-    final static String inputFilePath = "E:/lvmt_BY/simulation_output/marjolaine/output_IdF_egt_5pct_2018";
+    //final static String inputFilePath = "E:/lvmt_BY/simulation_output/marjolaine/output_IdF_egt_5pct_2018";
+    final static String inputFilePath = "F:/lannesm/output_IdF_25pct_2018";
 
     static public void main(String[] args) {
 
